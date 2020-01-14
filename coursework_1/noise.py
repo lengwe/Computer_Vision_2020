@@ -18,13 +18,13 @@ def add_noise(image, noise_type):
 		'speckle': Multiplicative noise. output = image + image * n, where n is uniform noise with specified mean & variance.
 	"""
 	if noise_type == 'gaussian':
-        # Gaussian noise
+		# Gaussian noise
 		mean = 0
 		sigma = 10
 		noise = np.random.normal(mean, sigma, image.shape)
 		output = image + noise
 	elif noise_type == 'salt_and_pepper':
-        # Salt and pepper noise
+		# Salt and pepper noise
 		amount = 0.04
 		salt_vs_pepper = 0.5
 		output = np.copy(image)
@@ -39,17 +39,17 @@ def add_noise(image, noise_type):
 		coords = [np.random.randint(0, i - 1, int(n_pixel_pepper)) for i in image.shape]
 		output[coords] = np.iinfo(image.dtype).min
 	elif noise_type == 'poisson':
-        # Poisson noise
+		# Poisson noise
 		vals = len(np.unique(image))
 		vals = pow(2, math.ceil(math.log2(vals)))
 		output = np.random.poisson(image * vals) / float(vals)
 	elif noise_type == 'speckle':
-        # Speckle noise
+		# Speckle noise
 		mean = 0
 		sigma = 0.05
 		noise = np.random.normal(mean, sigma, image.shape)
 		output = image + image * noise
 	else:
 		print('Error: unexpected noise type!')
-		return
+		return image
 	return output
